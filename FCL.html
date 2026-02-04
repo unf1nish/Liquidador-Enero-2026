@@ -337,7 +337,7 @@
 
         // Calcular valor aduana: max(valor_mercancia * 0.0028, 95)
         function calcularValorAduana(valorMercancia) {
-            if (!valorMercancia || valorMercancia <= 0) return 0;
+            if (!valorMercancia || valorMercancia <= 0) return 95;
             const calculo = valorMercancia * 0.0028;
             return Math.max(calculo, 95);
         }
