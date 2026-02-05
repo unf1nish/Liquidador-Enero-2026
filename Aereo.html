@@ -233,6 +233,18 @@
       </div>
     </div>
 
+    <div class="results-section">
+      <h2 style="margin-bottom: 15px; color: #333;">Calculo del 6%</h2>
+      <div class="result-row">
+        <span class="result-label">VLR:</span>
+        <input type="number" id="vlrInput" min="0" step="0.01" placeholder="0.00" style="width: 200px; text-align: right;" />
+      </div>
+      <div class="result-row">
+        <span class="result-label">6%:</span>
+        <span class="result-value" id="seisPercent">$ 0.00</span>
+      </div>
+    </div>
+
     <div class="total-section">
       <h2>TOTAL A PAGAR (CIP)</h2>
       <div class="total-amount" id="totalFinal">$ 0.00</div>
@@ -430,6 +442,12 @@ document.getElementById('aerolinea').addEventListener('change', calcular);
 document.getElementById('pesoFisico').addEventListener('input', calcular);
 document.getElementById('volumen').addEventListener('input', calcular);
 
+document.getElementById('vlrInput').addEventListener('input', function() {
+  const vlr = parseFloat(this.value) || 0;
+  const seisPercent = vlr * 0.06;
+  document.getElementById('seisPercent').textContent = `$ ${seisPercent.toFixed(2)}`;
+});
+
 function actualizarUI() {
   const aerolineaGroup = document.getElementById('aerolineaGroup');
   const volumenLabel = document.getElementById('volumenLabel');
@@ -617,4 +635,3 @@ limpiarResultados();
 </html>
 
 Esta calculadora solo refleja valores estimados o apróximados.
-
