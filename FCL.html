@@ -1005,18 +1005,18 @@
             }).format(valor);
         }
 
-        // Calcular valor aduana: max(valor_mercancia * 0.0028, 95)
+        // Calcular valor aduana: max(valor_mercancia * 0.0028, 104)
         function calcularValorAduana(valorMercancia) {
-            if (!valorMercancia || valorMercancia <= 0) return 95;
+            if (!valorMercancia || valorMercancia <= 0) return 104;
             const calculo = valorMercancia * 0.0028;
-            return Math.max(calculo, 95);
+            return Math.max(calculo, 104);
         }
 
         // Obtener flete terrestre según origen y contenedor
         function obtenerFleteTerrestre(origen, contenedor) {
             const tarifasTerrestre = {
-                'BUENAVENTURA': { '20STD': 680, '40HC': 1010 },
-                'CARTAGENA': { '20STD': 800, '40HC': 1080 }
+                'BUENAVENTURA': { '20STD': 750, '40HC': 1013.16 },
+                'CARTAGENA': { '20STD': 881.58, '40HC': 1118.42 }
             };
             return tarifasTerrestre[origen]?.[contenedor] || 0;
         }
