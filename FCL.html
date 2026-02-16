@@ -121,11 +121,15 @@
         .total-value {
             font-size: 42px;
             font-weight: bold;
-            letter-spacing: -1px;
+            letter-spacing: 2px;
+        }
+
+        .error {
+            border-color: #ff6b6b !important;
         }
 
         .error-message {
-            color: #d32f2f;
+            color: #ff6b6b;
             font-size: 12px;
             margin-top: 5px;
             display: none;
@@ -136,32 +140,17 @@
         }
 
         @media (max-width: 768px) {
-            .content {
-                padding: 20px;
+            .form-grid {
+                grid-template-columns: 1fr;
             }
 
             .header h1 {
-                font-size: 22px;
+                font-size: 24px;
             }
 
             .total-value {
                 font-size: 32px;
             }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .info-badge {
-            display: inline-block;
-            background: #e3f2fd;
-            color: #7899d6;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            margin-left: 8px;
-            font-weight: 500;
         }
     </style>
 </head>
@@ -173,94 +162,79 @@
         </div>
 
         <div class="content">
-            <!-- SECCIÓN 1: DATOS PRINCIPALES -->
+            <!-- Sección de Ruta -->
             <div class="section">
                 <div class="section-title">📍 Información de Ruta</div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="destino">Destino</label>
-                        <select id="destino" required>
+                        <select id="destino">
                             <option value="">Seleccione destino...</option>
                         </select>
-                        <span class="error-message" id="error-destino">Debe seleccionar un destino</span>
+                        <span class="error-message" id="destinoError">Debe seleccionar un destino</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="origen">Origen <span class="info-badge">Auto</span></label>
-                        <input type="text" id="origen" readonly placeholder="Se asigna automáticamente">
+                        <label for="origen">Origen</label>
+                        <input type="text" id="origen" value="Auto" readonly>
                     </div>
 
                     <div class="form-group">
                         <label for="contenedor">Tipo de Contenedor</label>
-                        <select id="contenedor" required>
+                        <select id="contenedor">
                             <option value="">Seleccione contenedor...</option>
                             <option value="20STD">20 STD</option>
                             <option value="40HC">40 HC</option>
                         </select>
-                        <span class="error-message" id="error-contenedor">Debe seleccionar un tipo de contenedor</span>
+                        <span class="error-message" id="contenedorError">Debe seleccionar un tipo de contenedor</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="tiempoTransito">Tiempo de Tránsito ⌛ <span class="info-badge">Auto</span></label>
-                        <input type="text" id="tiempoTransito" readonly placeholder="Se asigna automáticamente">
+                        <label for="tiempoTransito">Tiempo de Tránsito ⌛</label>
+                        <input type="text" id="tiempoTransito" value="Auto" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="navieras">Navieras 🚢 <span class="info-badge">Auto</span></label>
-                        <input type="text" id="navieras" readonly placeholder="Se asignan automáticamente">
+                        <label for="navieras">Navieras 🚢</label>
+                        <select id="navieras">
+                            <option value="">Seleccione naviera...</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
-            <!-- SECCIÓN 2: COSTOS -->
+            <!-- Sección de Costos -->
             <div class="section">
                 <div class="section-title">💲 Detalle de Costos</div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="valorMercancia">Valor Mercancía (USD)</label>
-                        <input type="number" id="valorMercancia" placeholder="0.00" min="0" step="0.01">
-                        <span class="error-message" id="error-mercancia">Ingrese el valor de la mercancía</span>
+                        <input type="number" id="valorMercancia" placeholder="Ingrese el valor de la mercancía" min="0" step="0.01">
                     </div>
 
                     <div class="form-group">
-                        <label for="valorAduana">Valor Aduana (USD) <span class="info-badge">Auto</span></label>
-                        <input type="text" id="valorAduana" readonly placeholder="0.00">
+                        <label for="valorAduana">Valor Aduana (USD)</label>
+                        <input type="text" id="valorAduana" value="Auto" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="valorFlete">Valor Flete (USD) <span class="info-badge">Auto</span></label>
-                        <input type="text" id="valorFlete" readonly placeholder="0.00">
+                        <label for="valorFlete">Valor Flete (USD)</label>
+                        <input type="text" id="valorFlete" value="Auto" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="gastosPortuarios">Gastos Portuarios (USD) <span class="info-badge">Auto</span></label>
-                        <input type="text" id="gastosPortuarios" readonly placeholder="0.00">
+                        <label for="gastosPortuarios">Gastos Portuarios (USD)</label>
+                        <input type="text" id="gastosPortuarios" value="Auto" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="fleteTerrestre">Flete Terrestre (USD) <span class="info-badge">Auto</span></label>
-                        <input type="text" id="fleteTerrestre" readonly placeholder="0.00">
+                        <label for="fleteTerrestre">Flete Terrestre (USD)</label>
+                        <input type="text" id="fleteTerrestre" value="Auto" readonly>
                     </div>
                 </div>
             </div>
 
-            <!-- SECCIÓN 3: CÁLCULO DEL 6% -->
-            <div class="section">
-                <div class="section-title">📊 Cálculo del 6%</div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="vlr">VLR</label>
-                        <input type="number" id="vlr" placeholder="0.00" min="0" step="0.01">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="seisPercent">6% <span class="info-badge">Auto</span></label>
-                        <input type="text" id="seisPercent" readonly placeholder="0.00">
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECCIÓN 4: TOTAL -->
+            <!-- Total -->
             <div class="total-section">
                 <div class="total-label">VALOR TOTAL APROXIMADO</div>
                 <div class="total-value" id="totalValue">USD 0.00</div>
@@ -269,51 +243,737 @@
     </div>
 
     <script>
-        // Base de datos de tarifas
+        // Base de datos de tarifas actualizada desde Excel
         const tarifas = [
-            { origen: "BUENAVENTURA", destino: "ACAJUTLA", "20STD": 1770.00, "40HC": 1790.00, navieras: "MSC - MAERSK", transito: "22" },
-            { origen: "BUENAVENTURA", destino: "ARICA", "20STD": 736.00, "40HC": 786.00, navieras: "MSK", transito: "20" },
-            { origen: "BUENAVENTURA", destino: "BALBOA", "20STD": 469.00, "40HC": 499.00, navieras: "MSK", transito: "4" },
-            { origen: "BUENAVENTURA", destino: "BALTIMORE", "20STD": 1836.00, "40HC": 2086.00, navieras: "MSC", transito: "24" },
-            { origen: "CARTAGENA", destino: "BUENOS AIRES", "20STD": 930.00, "40HC": 1030.00, navieras: "COSCO - HAPAG - MSK SPOT - ONE", transito: "24" },
-            { origen: "BUENAVENTURA", destino: "CALLAO", "20STD": 580.00, "40HC": 615.00, navieras: "COSCO - EMC - MAERSK - MSC - ONE - PIL - ROLCO", transito: "4" },
-            { origen: "CARTAGENA", destino: "CAUCEDO", "20STD": 586.00, "40HC": 614.00, navieras: "MSK - OOCL", transito: "7" },
-            { origen: "BUENAVENTURA", destino: "CORINTO", "20STD": 856.00, "40HC": 1286.00, navieras: "PIL", transito: "6" },
-            { origen: "CARTAGENA", destino: "CRISTOBAL", "20STD": 666.00, "40HC": 696.00, navieras: "MSC", transito: "4" },
-            { origen: "BUENAVENTURA", destino: "ENSENADA", "20STD": 1150.00, "40HC": 1230.00, navieras: "MSC", transito: "16" },
-            { origen: "BUENAVENTURA", destino: "GUAYAQUIL", "20STD": 580.00, "40HC": 580.00, navieras: "MSC - ONE SPOT - COSCO - ZIM LINES - MAERSK", transito: "7" },
-            { origen: "BUENAVENTURA", destino: "GUAYAQUIL /POSORJA", "20STD": 400.00, "40HC": 440.00, navieras: "MAERSK", transito: "6" },
-            { origen: "CARTAGENA", destino: "HOUSTON", "20STD": 585.00, "40HC": 596.00, navieras: "MSK", transito: "14" },
-            { origen: "CARTAGENA", destino: "ITAPOA", "20STD": 414.00, "40HC": 486.00, navieras: "MSK", transito: "20" },
-            { origen: "CARTAGENA", destino: "KINGSTON", "20STD": 750.00, "40HC": 865.00, navieras: "COSCO", transito: "4" },
-            { origen: "CARTAGENA", destino: "LA GUAIRA", "20STD": 1770.00, "40HC": 1940.00, navieras: "HAPAG - MAERSK", transito: "3" },
-            { origen: "BUENAVENTURA", destino: "LAZARO CARDENAS", "20STD": 836.00, "40HC": 736.00, navieras: "ONE SPOT", transito: "10" },
-            { origen: "CARTAGENA", destino: "LOS ANGELES", "20STD": 1725.00, "40HC": 1930.00, navieras: "ONE - HAPAG", transito: "16" },
-            { origen: "BUENAVENTURA", destino: "MANZANILLO (MEXICO)", "20STD": 876.00, "40HC": 896.00, navieras: "MSC - HAPAG", transito: "12" },
-            { origen: "CARTAGENA", destino: "MANZANILLO (PANAMA)", "20STD": 930.00, "40HC": 960.00, navieras: "MAERSK - HAPAG - ONE - COSCO", transito: "3" },
-            { origen: "BUENAVENTURA", destino: "MONTEVIDEO BUN", "20STD": 1940.00, "40HC": 2180.00, navieras: "MAERSK", transito: "7 - 36" },
-            { origen: "CARTAGENA", destino: "MONTEVIDEO CTG", "20STD": 880.00, "40HC": 985.00, navieras: "COSCO MAERSK", transito: "32" },
-            { origen: "CARTAGENA", destino: "NEW YORK", "20STD": 1436.00, "40HC": 1486.00, navieras: "MSC", transito: "12" },
-            { origen: "CARTAGENA", destino: "NEWARK", "20STD": 771.00, "40HC": 821.00, navieras: "MSK", transito: "12" },
-            { origen: "CARTAGENA", destino: "ORANJESTAD", "20STD": 2310.00, "40HC": 3460.20, navieras: "CMA - MAERSK", transito: "16" },
-            { origen: "CARTAGENA", destino: "PORT EVERGLADES", "20STD": 1090.00, "40HC": 1200.00, navieras: "CMA", transito: "3" },
-            { origen: "CARTAGENA", destino: "PUERTO BARRIOS", "20STD": 900.00, "40HC": 1018.00, navieras: "ONE SPOT - MSK", transito: "12" },
-            { origen: "CARTAGENA", destino: "PUERTO CABELLO", "20STD": 1770.00, "40HC": 1910.00, navieras: "MAERSK - HAPAG", transito: "6" },
-            { origen: "BUENAVENTURA", destino: "PUERTO CALDERA", "20STD": 866.00, "40HC": 1186.00, navieras: "PIL", transito: "14" },
-            { origen: "CARTAGENA", destino: "PUERTO CORTES", "20STD": 1280.00, "40HC": 1326.00, navieras: "MSC - CMA - MAERSK - COSCO", transito: "18" },
-            { origen: "CARTAGENA", destino: "PUERTO LIMON", "20STD": 1340.00, "40HC": 1190.00, navieras: "HAPAG", transito: "3" },
-            { origen: "CARTAGENA", destino: "PUERTO MOIN", "20STD": 1054.00, "40HC": 1176.00, navieras: "COSCO - MAERSK", transito: "5" },
-            { origen: "BUENAVENTURA", destino: "PUERTO QUETZAL", "20STD": 1200.00, "40HC": 1380.00, navieras: "MAERSK - ONE", transito: "20" },
-            { origen: "CARTAGENA", destino: "PUERTO QUETZAL", "20STD": 1360.00, "40HC": 1570.00, navieras: "MSC", transito: "20" },
-            { origen: "CARTAGENA", destino: "RIO HAINA", "20STD": 950.00, "40HC": 1020.00, navieras: "COSCO - MAERSK", transito: "8" },
-            { origen: "BUENAVENTURA", destino: "RODMAN", "20STD": 796.00, "40HC": 796.00, navieras: "MSC - ONE SPOT", transito: "6" },
-            { origen: "BUENAVENTURA", destino: "SAN ANTONIO", "20STD": 530.00, "40HC": 566.00, navieras: "ROLCO - MAERSK - PIL - COSCO", transito: "11" },
-            { origen: "CARTAGENA", destino: "SAN JUAN", "20STD": 1290.00, "40HC": 1375.00, navieras: "HAPAG - MAERSK", transito: "7" },
-            { origen: "CARTAGENA", destino: "SAN PEDRO SULA", "20STD": 1280.00, "40HC": 1310.00, navieras: "MSK", transito: "12" },
-            { origen: "CARTAGENA", destino: "SAN SALVADOR", "20STD": 2065.00, "40HC": 2150.00, navieras: "HAPAG", transito: "14" },
-            { origen: "CARTAGENA", destino: "SANTO TOMAS DE CASTILLA", "20STD": 1170.00, "40HC": 1220.00, navieras: "MAERSK - COSCO", transito: "11" },
-            { origen: "CARTAGENA", destino: "VERACRUZ", "20STD": 990.00, "40HC": 795.00, navieras: "HAPAG - COSCO - CMA - MAERSK", transito: "8" }
-        ];
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "ACAJUTLA",
+                        "naviera": "ONE",
+                        "20STD": 2605.0,
+                        "40HC": 2730.0,
+                        "transito": "19-22 DÍAS APROX"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "ACAJUTLA",
+                        "naviera": "HAPAG",
+                        "20STD": 1970.0,
+                        "40HC": 2205.0,
+                        "transito": "26 días via Manzanillom MX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "BUENOS AIRES",
+                        "naviera": "ONE",
+                        "20STD": 1510.0,
+                        "40HC": 1570.0,
+                        "transito": "22"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "BUENOS AIRES",
+                        "naviera": "Hapag",
+                        "20STD": 940.0,
+                        "40HC": 1070.0,
+                        "transito": "22 días aprox. Directo"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "BUENOS AIRES",
+                        "naviera": "HAPAG",
+                        "20STD": 850.0,
+                        "40HC": 980.0,
+                        "transito": "18 días aprox"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CALLAO",
+                        "naviera": "WAN HAI",
+                        "20STD": 496.0,
+                        "40HC": 556.0,
+                        "transito": "2 - 4  DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CALLAO",
+                        "naviera": "PIL COLOMBIA",
+                        "20STD": 386.0,
+                        "40HC": 496.0,
+                        "transito": "3-6 DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CALLAO",
+                        "naviera": "EVERGREEN",
+                        "20STD": 486.0,
+                        "40HC": 576.0,
+                        "transito": "2 - 4  DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CALLAO",
+                        "naviera": "ROLCO",
+                        "20STD": 420.0,
+                        "40HC": 420.0,
+                        "transito": "4  días"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CALLAO",
+                        "naviera": "CMA",
+                        "20STD": 390.0,
+                        "40HC": 415.0,
+                        "transito": "5 DÍAS APROX"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CALLAO",
+                        "naviera": "HYUNDAI",
+                        "20STD": 583.0,
+                        "40HC": 635.0,
+                        "transito": "4-6 DÍAS APROX"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CALLAO",
+                        "naviera": "PIL",
+                        "20STD": 380.0,
+                        "40HC": 450.0,
+                        "transito": "3 DÍAS"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "CAUCEDO",
+                        "naviera": "CMA",
+                        "20STD": 850.0,
+                        "40HC": 960.0,
+                        "transito": "1-2 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "CAUCEDO",
+                        "naviera": "HAPAG",
+                        "20STD": 1140.0,
+                        "40HC": 1060.0,
+                        "transito": "1-2 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "CAUCEDO",
+                        "naviera": "HAPAG",
+                        "20STD": 1165.0,
+                        "40HC": 1060.0,
+                        "transito": "2 días aaprox"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "CORINTO",
+                        "naviera": "PIL COLOMBIA",
+                        "20STD": 856.0,
+                        "40HC": 1286.0,
+                        "transito": "4-6 DIAS APROX POR CONFIRMAR"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "GUAYAQUIL",
+                        "naviera": "Zim Lines",
+                        "20STD": 400.0,
+                        "40HC": 460.0,
+                        "transito": "4 días"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "GUAYAQUIL",
+                        "naviera": "ONE SPOT",
+                        "20STD": 476.0,
+                        "40HC": 556.0,
+                        "transito": "7-10 DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "GUAYAQUIL",
+                        "naviera": "ONE",
+                        "20STD": 300.0,
+                        "40HC": 380.0,
+                        "transito": "7"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "GUAYAQUIL",
+                        "naviera": "CMA",
+                        "20STD": 395.0,
+                        "40HC": 415.0,
+                        "transito": "4 DÍAS APROX"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "GUAYAQUIL",
+                        "naviera": "HAPAG",
+                        "20STD": 735.0,
+                        "40HC": 750.0,
+                        "transito": "6-8 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "LA GUAIRA",
+                        "naviera": "HAPAG",
+                        "20STD": 1580.0,
+                        "40HC": 1820.0,
+                        "transito": "5"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "LA GUAIRA",
+                        "naviera": "ONE",
+                        "20STD": 2180.0,
+                        "40HC": 2900.0,
+                        "transito": "2"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "LA GUAIRA",
+                        "naviera": "CMA",
+                        "20STD": 1500.0,
+                        "40HC": 2400.0,
+                        "transito": "5 dias"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "LAZARO CARDENAS,MX",
+                        "naviera": "ONE SPOT",
+                        "20STD": 836.0,
+                        "40HC": 736.0,
+                        "transito": "8-10 DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "LOS ANGELES",
+                        "naviera": "HAPAG",
+                        "20STD": 1730.0,
+                        "40HC": 1540.0,
+                        "transito": "13"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "LOS ANGELES",
+                        "naviera": "ONE",
+                        "20STD": 1670.0,
+                        "40HC": 1870.0,
+                        "transito": "12"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "MANZANILLO (MEXICO)",
+                        "naviera": "HMM",
+                        "20STD": 710.0,
+                        "40HC": 910.0,
+                        "transito": "9"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "MANZANILLO (MEXICO)",
+                        "naviera": "HAPAG",
+                        "20STD": 840.0,
+                        "40HC": 820.0,
+                        "transito": "9"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "MANZANILLO (MEXICO)",
+                        "naviera": "Hapag",
+                        "20STD": 960.0,
+                        "40HC": 910.0,
+                        "transito": "9 días"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "MANZANILLO (MEXICO)",
+                        "naviera": "HYUNDAI",
+                        "20STD": 815.0,
+                        "40HC": 845.0,
+                        "transito": "8-9 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MANZANILLO (PANAMA)",
+                        "naviera": "ONE SPOT",
+                        "20STD": 582.0,
+                        "40HC": 768.0,
+                        "transito": "2-4 DÍAS APROX DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MANZANILLO (PANAMA)",
+                        "naviera": "ONE",
+                        "20STD": 675.0,
+                        "40HC": 775.0,
+                        "transito": "2-3 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MANZANILLO (PANAMA)",
+                        "naviera": "HAPAG",
+                        "20STD": 910.0,
+                        "40HC": 1060.0,
+                        "transito": "3 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MANZANILLO (PANAMA)",
+                        "naviera": "ONE",
+                        "20STD": 850.0,
+                        "40HC": 890.0,
+                        "transito": "2 DÍAS"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MANZANILLO (PANAMA)",
+                        "naviera": "CMA",
+                        "20STD": 1430.0,
+                        "40HC": 1550.0,
+                        "transito": "2 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MANZANILLO (PANAMA)",
+                        "naviera": "HAPAG",
+                        "20STD": 810.0,
+                        "40HC": 910.0,
+                        "transito": "2 DÍAS"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "MONTEVIDEO",
+                        "naviera": "HAPAG",
+                        "20STD": 2920.0,
+                        "40HC": 3990.0,
+                        "transito": "44"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MONTEVIDEO",
+                        "naviera": "HAPAG",
+                        "20STD": 1330.0,
+                        "40HC": 1580.0,
+                        "transito": "25"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "MONTEVIDEO",
+                        "naviera": "Hapag",
+                        "20STD": 2876.0,
+                        "40HC": 4187.0,
+                        "transito": "44-80 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "MONTEVIDEO",
+                        "naviera": "Hapag (podemos revisar otras opciones mas economicas)",
+                        "20STD": 1380.0,
+                        "40HC": 1570.0,
+                        "transito": "25 días directo"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "ORANJESTAD",
+                        "naviera": "HPL",
+                        "20STD": 2420.0,
+                        "40HC": 4200.0,
+                        "transito": "7"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "ORANJESTAD",
+                        "naviera": "CMA SPOT",
+                        "20STD": 2200.0,
+                        "40HC": 3300.0,
+                        "transito": "11"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "ORANJESTAD",
+                        "naviera": "Hapag",
+                        "20STD": 2407.0,
+                        "40HC": 4203.0,
+                        "transito": "6-7 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PORT EVERGLADES",
+                        "naviera": "HAPAG",
+                        "20STD": 1790.0,
+                        "40HC": 1390.0,
+                        "transito": "7"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PORT EVERGLADES",
+                        "naviera": "CMA",
+                        "20STD": 1020.0,
+                        "40HC": 1136.0,
+                        "transito": "6 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PORT EVERGLADES",
+                        "naviera": "HAPAG",
+                        "20STD": 1685.0,
+                        "40HC": 1210.0,
+                        "transito": "5 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PORT EVERGLADES",
+                        "naviera": "CMA",
+                        "20STD": 1250.0,
+                        "40HC": 1250.0,
+                        "transito": "7 dias"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO BARRIOS",
+                        "naviera": "HPL",
+                        "20STD": 1120.0,
+                        "40HC": 1380.0,
+                        "transito": "7"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO BARRIOS",
+                        "naviera": "Hapag",
+                        "20STD": 1115.0,
+                        "40HC": 1300.0,
+                        "transito": "9 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO BARRIOS",
+                        "naviera": "ONE SPOT",
+                        "20STD": 782.0,
+                        "40HC": 1018.0,
+                        "transito": "9-12 DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO BARRIOS",
+                        "naviera": "One",
+                        "20STD": 840.0,
+                        "40HC": 1050.0,
+                        "transito": "9 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO BARRIOS",
+                        "naviera": "HAPAG",
+                        "20STD": 1200.0,
+                        "40HC": 1180.0,
+                        "transito": "9-10 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO BARRIOS",
+                        "naviera": "HPL",
+                        "20STD": 1170.0,
+                        "40HC": 1330.0,
+                        "transito": "9-12 dias"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO CABELLO",
+                        "naviera": "HAPAG",
+                        "20STD": 1600.0,
+                        "40HC": 1840.0,
+                        "transito": "2"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO CABELLO",
+                        "naviera": "ONE",
+                        "20STD": 2200.0,
+                        "40HC": 2900.0,
+                        "transito": "3"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "PUERTO CALDERA",
+                        "naviera": "PIL COLOMBIA",
+                        "20STD": 866.0,
+                        "40HC": 1186.0,
+                        "transito": "12-14 DIAS APROX POR CONFIRMAR"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO CORTES",
+                        "naviera": "CMA",
+                        "20STD": 1220.0,
+                        "40HC": 1710.0,
+                        "transito": "7 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO CORTES",
+                        "naviera": "CMA",
+                        "20STD": 790.0,
+                        "40HC": 1080.0,
+                        "transito": "7-8 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO MOIN",
+                        "naviera": "One",
+                        "20STD": 1040.0,
+                        "40HC": 1240.0,
+                        "transito": "4 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO MOIN",
+                        "naviera": "ONE SPOT",
+                        "20STD": 952.0,
+                        "40HC": 1218.0,
+                        "transito": "3-6 DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "PUERTO MOIN",
+                        "naviera": "CMA",
+                        "20STD": 880.0,
+                        "40HC": 1110.0,
+                        "transito": "2-3 DÍAS APROX"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "PUERTO QUETZAL",
+                        "naviera": "ONE SPOT",
+                        "20STD": 1080.0,
+                        "40HC": 1280.0,
+                        "transito": "20 A 25"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "PUERTO QUETZAL",
+                        "naviera": "Hapag",
+                        "20STD": 1055.0,
+                        "40HC": 1201.0,
+                        "transito": "17 días vía Manzanillo"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "PUERTO QUETZAL",
+                        "naviera": "ONE",
+                        "20STD": 1217.0,
+                        "40HC": 1435.0,
+                        "transito": "25-28 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "RIO HAINA",
+                        "naviera": "CMA",
+                        "20STD": 1740.0,
+                        "40HC": 2030.0,
+                        "transito": "8 DÍAS"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "RIO HAINA",
+                        "naviera": "HAPAG",
+                        "20STD": 2050.0,
+                        "40HC": 2450.0,
+                        "transito": "8 DÍAS"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "RODMAN,PA",
+                        "naviera": "ONE SPOT",
+                        "20STD": 796.0,
+                        "40HC": 796.0,
+                        "transito": "3-6 DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "SAN ANTONIO",
+                        "naviera": "WAN HAI",
+                        "20STD": 510.0,
+                        "40HC": 596.0,
+                        "transito": "9-10 DIAS DIRECTO"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "SAN ANTONIO",
+                        "naviera": "ROLCO",
+                        "20STD": 475.0,
+                        "40HC": 480.0,
+                        "transito": "10 días"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "SAN ANTONIO",
+                        "naviera": "CMA",
+                        "20STD": 400.0,
+                        "40HC": 575.0,
+                        "transito": "9-10 DÍAS APROX"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "SAN ANTONIO",
+                        "naviera": "HAPAG",
+                        "20STD": 665.0,
+                        "40HC": 840.0,
+                        "transito": "8-9 DÍAS APROX"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "SAN ANTONIO/VALPARAISO",
+                        "naviera": "PIL COLOMBIA",
+                        "20STD": 396.0,
+                        "40HC": 576.0,
+                        "transito": "6-8 DÍAS APROX DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN JUAN",
+                        "naviera": "HPL",
+                        "20STD": 1250.0,
+                        "40HC": 1180.0,
+                        "transito": "4"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN JUAN",
+                        "naviera": "Hapag",
+                        "20STD": 1165.0,
+                        "40HC": 1050.0,
+                        "transito": "5 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN JUAN",
+                        "naviera": "HAPAG",
+                        "20STD": 1290.0,
+                        "40HC": 1320.0,
+                        "transito": "4 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN PEDRO SULA",
+                        "naviera": "HPL",
+                        "20STD": 1340.0,
+                        "40HC": 1710.0,
+                        "transito": "14"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN PEDRO SULA",
+                        "naviera": "HAPAG",
+                        "20STD": 1490.0,
+                        "40HC": 1290.0,
+                        "transito": "15 días aprox"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN SALVADOR",
+                        "naviera": "HAPAG",
+                        "20STD": 2065.0,
+                        "40HC": 2150.0,
+                        "transito": "14 dias via via\nPUERTO BARRIOS, GT"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN SALVADOR",
+                        "naviera": "CMA",
+                        "20STD": 2880.0,
+                        "40HC": 3360.0,
+                        "transito": "9 dias via \nSANTO TOMAS"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SAN SALVADOR",
+                        "naviera": "CMA",
+                        "20STD": 2880.0,
+                        "40HC": 3360.0,
+                        "transito": "9 dias via \nSANTO TOMAS"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SANTO TOMAS DE CASTILLA",
+                        "naviera": "CMA",
+                        "20STD": 1230.0,
+                        "40HC": 1190.0,
+                        "transito": "6-10 dias"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SANTO TOMAS DE CASTILLA",
+                        "naviera": "CMA",
+                        "20STD": 1048.0,
+                        "40HC": 1528.0,
+                        "transito": "6-8 DÍAS APROX DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "SANTO TOMAS DE CASTILLA",
+                        "naviera": "ONE SPOT",
+                        "20STD": 982.0,
+                        "40HC": 1318.0,
+                        "transito": "7-10 DIAS APROX DIRECTO"
+            },
+            {
+                        "origen": "BUENAVENTURA",
+                        "destino": "VALPARAISO",
+                        "naviera": "WAN HAI",
+                        "20STD": 486.0,
+                        "40HC": 586.0,
+                        "transito": "7-9 DIAS DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "VERACRUZ",
+                        "naviera": "CMA",
+                        "20STD": 696.0,
+                        "40HC": 496.0,
+                        "transito": "11-14 DÍAS APROX DIRECTO"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "VERACRUZ",
+                        "naviera": "CMA",
+                        "20STD": 790.0,
+                        "40HC": 520.0,
+                        "transito": "6 días"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "VERACRUZ",
+                        "naviera": "HAPAG",
+                        "20STD": 1145.0,
+                        "40HC": 1045.0,
+                        "transito": "4-5 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "VERACRUZ",
+                        "naviera": "CMA",
+                        "20STD": 815.0,
+                        "40HC": 555.0,
+                        "transito": "9-11 DÍAS APROX"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "VERACRUZ",
+                        "naviera": "HAPAG",
+                        "20STD": 990.0,
+                        "40HC": 795.0,
+                        "transito": "7 días aprox"
+            },
+            {
+                        "origen": "CARTAGENA",
+                        "destino": "VERACRUZ",
+                        "naviera": "CMA",
+                        "20STD": 0.0,
+                        "40HC": 695.0,
+                        "transito": "7 días aprox"
+            }
+];
 
         // Referencias a elementos DOM
         const destinoSelect = document.getElementById('destino');
@@ -325,12 +985,10 @@
         const valorFleteInput = document.getElementById('valorFlete');
         const gastosPortuariosInput = document.getElementById('gastosPortuarios');
         const fleteTerrestreInput = document.getElementById('fleteTerrestre');
-        const navierasInput = document.getElementById('navieras');
+        const navierasSelect = document.getElementById('navieras');
         const totalValueDiv = document.getElementById('totalValue');
-        const vlrInput = document.getElementById('vlr');
-        const seisPercentInput = document.getElementById('seisPercent');
 
-        // Poblar desplegable de destinos (sin duplicados)
+        // Poblar desplegable de destinos (sin duplicados y ordenados)
         const destinosUnicos = [...new Set(tarifas.map(t => t.destino))].sort();
         destinosUnicos.forEach(destino => {
             const option = document.createElement('option');
@@ -368,14 +1026,53 @@
             return contenedor === '20STD' ? 350 : contenedor === '40HC' ? 420 : 0;
         }
 
-        // Buscar tarifa de flete en la base de datos
-        function buscarTarifaFlete(destino, contenedor) {
-            const tarifa = tarifas.find(t => t.destino === destino);
-            if (!tarifa) return { flete: 0, origen: '', navieras: '', transito: '' };
+        // Cargar navieras disponibles según el destino seleccionado
+        function cargarNavieras() {
+            const destino = destinoSelect.value;
+
+            // Limpiar el select de navieras
+            navierasSelect.innerHTML = '<option value="">Seleccione naviera...</option>';
+
+            if (!destino) {
+                navierasSelect.disabled = true;
+                return;
+            }
+
+            // Obtener navieras únicas para este destino
+            const navierasDisponibles = [...new Set(
+                tarifas
+                    .filter(t => t.destino === destino)
+                    .map(t => t.naviera)
+            )].sort();
+
+            // Agregar opciones al select
+            navierasDisponibles.forEach(naviera => {
+                const option = document.createElement('option');
+                option.value = naviera;
+                option.textContent = naviera;
+                navierasSelect.appendChild(option);
+            });
+
+            navierasSelect.disabled = false;
+
+            // Actualizar origen si hay tarifas disponibles
+            const tarifaEjemplo = tarifas.find(t => t.destino === destino);
+            if (tarifaEjemplo) {
+                origenInput.value = tarifaEjemplo.origen;
+            }
+        }
+
+        // Buscar tarifa específica según destino, naviera y tipo de contenedor
+        function buscarTarifaEspecifica(destino, naviera, contenedor) {
+            const tarifa = tarifas.find(t => 
+                t.destino === destino && 
+                t.naviera === naviera
+            );
+
+            if (!tarifa) return { flete: 0, transito: '' };
+
             return {
                 flete: tarifa[contenedor] || 0,
-                origen: tarifa.origen,
-                navieras: tarifa.navieras || '',
                 transito: tarifa.transito || ''
             };
         }
@@ -383,75 +1080,56 @@
         // Calcular y actualizar todos los valores
         function calcularTotal() {
             const destino = destinoSelect.value;
+            const naviera = navierasSelect.value;
             const contenedor = contenedorSelect.value;
             const valorMercancia = parseFloat(valorMercanciaInput.value) || 0;
 
             // Si no hay datos básicos, resetear
-            if (!destino || !contenedor) {
-                origenInput.value = '';
-                tiempoTransitoInput.value = '';
-                valorAduanaInput.value = '';
-                valorFleteInput.value = '';
-                gastosPortuariosInput.value = '';
-                fleteTerrestreInput.value = '';
-                navierasInput.value = '';
+            if (!destino || !naviera || !contenedor) {
+                tiempoTransitoInput.value = 'Auto';
+                valorAduanaInput.value = 'Auto';
+                valorFleteInput.value = 'Auto';
+                gastosPortuariosInput.value = 'Auto';
+                fleteTerrestreInput.value = 'Auto';
                 totalValueDiv.textContent = 'USD 0.00';
                 return;
             }
 
-            // Buscar tarifa, origen, navieras y tiempo de tránsito
-            const { flete, origen, navieras, transito } = buscarTarifaFlete(destino, contenedor);
-            origenInput.value = origen;
-            navierasInput.value = navieras;
-            tiempoTransitoInput.value = transito ? `${transito} días` : '';
+            // Buscar tarifa específica
+            const { flete, transito } = buscarTarifaEspecifica(destino, naviera, contenedor);
+
+            // Actualizar tiempo de tránsito
+            tiempoTransitoInput.value = transito || 'N/D';
 
             // Calcular valores
             const valorAduana = calcularValorAduana(valorMercancia);
+            const origen = origenInput.value;
             const gastosPortuarios = obtenerGastosPortuarios(contenedor);
             const fleteTerrestre = obtenerFleteTerrestre(origen, contenedor);
 
-            // Mostrar valores individuales
+            // Actualizar campos
             valorAduanaInput.value = formatearMoneda(valorAduana);
             valorFleteInput.value = formatearMoneda(flete);
             gastosPortuariosInput.value = formatearMoneda(gastosPortuarios);
             fleteTerrestreInput.value = formatearMoneda(fleteTerrestre);
 
-            // Calcular total
+            // Calcular total: Valor Mercancía + Valor Aduana + Flete + Gastos Portuarios + Flete Terrestre
             const total = valorMercancia + valorAduana + flete + gastosPortuarios + fleteTerrestre;
             totalValueDiv.textContent = `USD ${formatearMoneda(total)}`;
         }
 
-        // Calcular el 6% del VLR
-        function calcularSeisPercent() {
-            const vlr = parseFloat(vlrInput.value) || 0;
-            const seisPercent = vlr * 0.06;
-            seisPercentInput.value = formatearMoneda(seisPercent);
-        }
-
         // Event listeners
-        destinoSelect.addEventListener('change', calcularTotal);
+        destinoSelect.addEventListener('change', function() {
+            cargarNavieras();
+            calcularTotal();
+        });
+
+        navierasSelect.addEventListener('change', calcularTotal);
         contenedorSelect.addEventListener('change', calcularTotal);
         valorMercanciaInput.addEventListener('input', calcularTotal);
-        vlrInput.addEventListener('input', calcularSeisPercent);
 
-        // Validación al cambiar campos
-        destinoSelect.addEventListener('change', function() {
-            if (this.value) {
-                document.getElementById('error-destino').classList.remove('show');
-            }
-        });
-
-        contenedorSelect.addEventListener('change', function() {
-            if (this.value) {
-                document.getElementById('error-contenedor').classList.remove('show');
-            }
-        });
-
-        valorMercanciaInput.addEventListener('input', function() {
-            if (this.value && parseFloat(this.value) > 0) {
-                document.getElementById('error-mercancia').classList.remove('show');
-            }
-        });
+        // Inicialización
+        navierasSelect.disabled = true;
     </script>
 </body>
 </html>
