@@ -2,253 +2,624 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liquidador aéreo</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Liquidador Aéreo</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root{
+      --bg0:#06121f;
+      --bg1:#071a2d;
+      --card:rgba(11, 29, 55, .78);
+      --stroke:rgba(99, 179, 237, .22);
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #7899d6 0%, #19356a 100%);
-      padding: 20px;
-      min-height: 100vh;
+      --sky:#38bdf8;
+      --sky2:#22d3ee;
+      --sun:#fbbf24;
+
+      --text:#eaf4ff;
+      --muted:#86a8c7;
+
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      padding: 30px;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 700px at 20% 5%, rgba(56,189,248,.22), transparent 60%),
+                  radial-gradient(900px 520px at 80% 10%, rgba(251,191,36,.16), transparent 55%),
+                  linear-gradient(170deg,var(--bg0),var(--bg1));
+      min-height:100vh;
+      overflow-x:hidden;
     }
 
-    h1 {
-      color: #333;
-      margin-bottom: 25px;
-      text-align: center;
-      font-size: 26px;
-      font-weight: 700;
+    /* subtle particles */
+    .noise{
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.08;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
     }
 
-    .input-section {
-      background: #f8f9fa;
-      padding: 25px;
-      border-radius: 10px;
-      margin-bottom: 25px;
+    /* top hero */
+    header{
+      padding:52px 18px 16px;
+      text-align:center;
+      position:relative;
+    }
+    .brand{
+      display:flex; align-items:center; justify-content:center; gap:12px;
+      margin-bottom:10px;
+    }
+    .brand-badge{
+      width:54px;height:54px;border-radius:16px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(56,189,248,.95), rgba(34,211,238,.55));
+      box-shadow:0 10px 28px rgba(56,189,248,.22);
+      border:1px solid rgba(255,255,255,.12);
+      font-size:24px;
+    }
+    .brand-name{
+      font-weight:800;
+      font-size:30px;
+      letter-spacing:-.4px;
+      background:linear-gradient(90deg,var(--sky),var(--sun));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .tagline{
+      font-size:12px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:22px;
+    }
+    .hero-title{
+      font-size:clamp(24px,4vw,44px);
+      font-weight:800;
+      line-height:1.15;
+      margin-bottom:10px;
+    }
+    .hero-title span{
+      background:linear-gradient(90deg,var(--sky2),var(--sun));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .hero-sub{
+      max-width:720px;
+      margin:0 auto 22px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
     }
 
-    .form-grid {
-      display: grid;
+    /* sky scene (plane + clouds) */
+    .scene{
+      position:relative;
+      height:150px;
+      overflow:hidden;
+    }
+    .sun{
+      position:absolute;
+      width:140px;height:140px;border-radius:50%;
+      right:-40px; top:-40px;
+      background:radial-gradient(circle at 35% 35%, rgba(255,255,255,.75), rgba(251,191,36,.65), rgba(251,191,36,.08) 70%, transparent 72%);
+      filter:blur(.2px);
+      opacity:.9;
+    }
+    .cloud{
+      position:absolute;
+      width:240px;height:80px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:50px;
+      filter: blur(.1px);
+      backdrop-filter: blur(10px);
+      box-shadow:0 16px 40px rgba(0,0,0,.25);
+    }
+    .cloud:before,.cloud:after{
+      content:"";
+      position:absolute;
+      background:inherit;
+      border:inherit;
+      border-radius:50%;
+    }
+    .cloud:before{ width:95px;height:95px; left:24px; top:-40px; }
+    .cloud:after{ width:120px;height:120px; left:98px; top:-62px; }
+
+    .c1{ top:30px; left:-280px; animation: drift 26s linear infinite; opacity:.9; transform:scale(.9);}
+    .c2{ top:70px; left:-420px; animation: drift 34s linear infinite; opacity:.7; transform:scale(1.05); animation-delay:-10s;}
+    .c3{ top:10px; left:-520px; animation: drift 40s linear infinite; opacity:.55; transform:scale(.75); animation-delay:-18s;}
+
+    @keyframes drift{
+      from{ transform:translateX(-10%) scale(var(--s,1)); }
+      to{ transform:translateX(150vw) scale(var(--s,1)); }
+    }
+
+    .plane{
+      position:absolute;
+      top:26px;
+      left:-220px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      animation: fly 9.5s ease-in-out infinite;
+      filter: drop-shadow(0 10px 18px rgba(34,211,238,.18));
+    }
+    @keyframes fly{
+      0%{ transform:translateX(0) translateY(6px) rotate(-2deg); opacity:.0;}
+      10%{opacity:1}
+      50%{ transform:translateX(85vw) translateY(-10px) rotate(2deg); }
+      100%{ transform:translateX(125vw) translateY(4px) rotate(-1deg); opacity:.0;}
+    }
+    .contrail{
+      width:140px;height:3px;
+      background:linear-gradient(90deg, rgba(34,211,238,.0), rgba(34,211,238,.65), rgba(255,255,255,.08));
+      border-radius:999px;
+      opacity:.85;
+    }
+    .plane-icon{
+      width:46px;height:46px;
+      border-radius:16px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(34,211,238,.25), rgba(56,189,248,.12));
+      border:1px solid rgba(255,255,255,.10);
+      font-size:20px;
+    }
+
+    /* layout */
+    .wrap{
+      max-width:1120px;
+      margin:0 auto;
+      padding:8px 18px 64px;
+    }
+
+    .chips{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:12px;
+      margin:0 0 22px;
+    }
+    .chip{
+      display:flex;align-items:center;gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .chip i{ color:var(--sky2); }
+    .chip strong{ color:var(--text); font-weight:700; }
+
+    .card{
+      border-radius:26px;
+      background:var(--card);
+      border:1px solid var(--stroke);
+      box-shadow:0 28px 70px rgba(0,0,0,.55);
+      backdrop-filter: blur(18px);
+      overflow:hidden;
+    }
+    .card-h{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:20px 26px;
+      border-bottom:1px solid var(--stroke);
+      background:linear-gradient(135deg, rgba(56,189,248,.14), rgba(251,191,36,.06));
+    }
+    .card-h .ico{
+      width:46px;height:46px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(56,189,248,.28), rgba(34,211,238,.12));
+      border:1px solid rgba(255,255,255,.12);
+      font-size:20px;
+    }
+    .card-h h2{
+      font-size:18px;
+      font-weight:700;
+    }
+    .card-h p{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:1px;
+    }
+    .pill{
+      margin-left:auto;
+      padding:5px 12px;
+      border-radius:999px;
+      border:1px solid rgba(251,191,36,.35);
+      background:rgba(251,191,36,.10);
+      color:rgba(255,236,179,.95);
+      font-size:12px;
+      font-weight:600;
+    }
+
+    .card-b{
+      padding:22px 26px 26px;
+    }
+
+    .sec{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      color:rgba(165, 243, 252, .95);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:6px 0 14px;
+      font-weight:700;
+    }
+    .sec:after{
+      content:"";
+      height:1px;
+      background:var(--stroke);
+      flex:1;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+      margin-bottom:14px;
+    }
+    @media (max-width:880px){
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    .fg{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    label{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:1.6px;
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:600;
+    }
+    label i{ color:var(--sky2); }
+
+    .control{
+      position:relative;
+    }
+    select, input{
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1.5px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      outline:none;
+      font-family:inherit;
+      font-size:14px;
+      transition: .25s ease;
+    }
+    select{ appearance:none; cursor:pointer; }
+    .control:after{
+      content:"\f107";
+      font-family:"Font Awesome 6 Free";
+      font-weight:900;
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:rgba(165, 243, 252, .95);
+      pointer-events:none;
+      opacity:.9;
+    }
+    input:focus, select:focus{
+      border-color:rgba(34,211,238,.55);
+      box-shadow:0 0 0 3px rgba(34,211,238,.12);
+      background:rgba(34,211,238,.06);
+    }
+    select option{ background:#0b1d37; color:var(--text); }
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.55;
+      background:rgba(0,0,0,.14);
+      border:1px dashed rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:12px 14px;
+    }
+    .hint strong{ color:var(--text); }
+
+    .error-msg{
+      display:none;
+      margin-top:6px;
+      color:rgba(255, 180, 180, .95);
+      font-size:12px;
+    }
+
+    /* results */
+    .results{
+      display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap:14px;
+      margin-top:10px;
+    }
+    @media (max-width:880px){
+      .results{ grid-template-columns:1fr; }
     }
 
-    .form-group {
-      margin-bottom: 15px;
+    .panel{
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      padding:16px 16px;
     }
 
-    label {
-      display: block;
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 8px;
-      font-size: 14px;
+    .kpi{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.07);
+    }
+    .row .l{
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      text-transform:uppercase;
+      letter-spacing:1.1px;
+      font-weight:700;
+    }
+    .row .l i{ color:var(--sky2); }
+    .row .v{
+      font-weight:800;
+      font-size:14px;
+      color:var(--text);
+      text-align:right;
+      min-width:120px;
     }
 
-    input, select {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 15px;
-      transition: border-color 0.3s;
+    .row.total{
+      border-color: rgba(251,191,36,.22);
+      background:linear-gradient(135deg, rgba(56,189,248,.09), rgba(251,191,36,.06));
+    }
+    .row.total .l i{ color:var(--sun); }
+    .row.total .v{
+      font-size:16px;
+      background:linear-gradient(90deg, var(--sky), var(--sun));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
 
-    input:focus, select:focus {
-      outline: none;
-      border-color: #7899d6;
+    .big-total{
+      margin-top:14px;
+      border-radius:18px;
+      border:1px solid rgba(56,189,248,.30);
+      background:linear-gradient(135deg, rgba(34,211,238,.12), rgba(251,191,36,.06));
+      padding:18px 16px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .big-total h3{
+      font-size:13px;
+      color:rgba(165,243,252,.95);
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .big-total .amt{
+      font-size:30px;
+      font-weight:900;
+      background:linear-gradient(90deg, var(--sky2), var(--sun));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
 
-    .results-section {
-      background: #fff;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      padding: 25px;
-      margin-bottom: 20px;
+    footer{
+      margin-top:22px;
+      padding:18px 18px 32px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      border-top:1px solid var(--stroke);
     }
-
-    .result-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .result-row:last-child {
-      border-bottom: none;
-    }
-
-    .result-label {
-      font-weight: 600;
-      color: #555;
-    }
-
-    .result-value {
-      color: #333;
-      font-weight: 600;
-    }
-
-    .total-section {
-      background: linear-gradient(135deg, #7899d6 0%, #19356a 100%);
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .total-section h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .total-amount {
-      font-size: 36px;
-      font-weight: 700;
-    }
-
-    .error-msg {
-      color: #d32f2f;
-      font-size: 13px;
-      margin-top: 5px;
-      display: none;
-    }
-
-    .info-text {
-      font-size: 13px;
-      color: #666;
-      margin-top: 5px;
-      line-height: 1.4;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    footer span{ display:inline-flex; gap:8px; align-items:center; padding:0 10px; }
+    footer i{ color:var(--sky2); }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Liquidador de Flete Aéreo</h1>
+  <div class="noise"></div>
 
-    <div class="input-section">
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="proveedor">Agente</label>
-          <select id="proveedor">
-            <option value="A">Magnum</option>
-            <option value="B">Sunrise</option>
-          </select>
+  <header>
+    <div class="brand">
+      <div class="brand-badge"><i class="fa-solid fa-plane-departure"></i></div>
+      <div class="brand-name">LaminAIRE</div>
+    </div>
+    <div class="tagline">Cotizador Aéreo</div>
+
+    <div class="hero-title">Liquida tu flete<br><span>con facilidad</span></div>
+    <div class="hero-sub">
+      Ingresa agente, destino y (si aplica) aerolínea; luego peso y volumen. El sistema calcula peso volumen, peso a liquidar y el desglose del total.
+    </div>
+  </header>
+
+  <div class="scene" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+
+    <div class="plane">
+      <div class="contrail"></div>
+      <div class="plane-icon"><i class="fa-solid fa-plane"></i></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="chips">
+      <div class="chip"><i class="fa-solid fa-cube"></i><span>Factor volumen <strong>CBM × 167</strong></span></div>
+      <div class="chip"><i class="fa-solid fa-scale-balanced"></i><span>Peso a calcular = <strong>MAX</strong>(Físico, Volumen)</span></div>
+      <div class="chip"><i class="fa-solid fa-file-invoice-dollar"></i><span>Incluye base y aduanas según tu configuración</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-h">
+        <div class="ico"><i class="fa-solid fa-route"></i></div>
+        <div>
+          <h2>Liquidador de Flete Aéreo</h2>
+          <p>Mismo funcionamiento del archivo original, con una interfaz más moderna</p>
         </div>
+        <div class="pill">AIR · IATA</div>
+      </div>
 
-        <div class="form-group">
-          <label for="destino">Destino</label>
-          <select id="destino">
-            <option value="">Seleccione un destino...</option>
-          </select>
-        </div>
+      <div class="card-b">
+        <div class="sec"><i class="fa-solid fa-sliders"></i> Datos</div>
 
-        <div class="form-group" id="aerolineaGroup">
-          <label for="aerolinea">Aerolínea</label>
-          <select id="aerolinea">
-            <option value="">Seleccione aerolínea...</option>
-          </select>
-          <span class="error-msg" id="aerolineaError">La aerolínea es requerida para este proveedor</span>
-        </div>
+        <div class="grid">
+          <div class="fg">
+            <label for="proveedor"><i class="fa-solid fa-user-tie"></i> Agente</label>
+            <div class="control">
+              <select id="proveedor">
+                <option value="A">Magnum</option>
+                <option value="B">Sunrise</option>
+              </select>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="pesoFisico">Peso Físico (KGS)</label>
-          <input type="number" id="pesoFisico" min="0" step="0.01" placeholder="0.00" />
-        </div>
+          <div class="fg">
+            <label for="destino"><i class="fa-solid fa-location-dot"></i> Destino</label>
+            <div class="control">
+              <select id="destino">
+                <option value="">Seleccione un destino...</option>
+              </select>
+            </div>
+          </div>
 
-        <div class="form-group" id="volumenGroup">
-          <label for="volumen" id="volumenLabel">Volumen (CBM)</label>
-          <input type="number" id="volumen" min="0" step="0.001" placeholder="0.000" />
-          <div class="info-text" id="volumenInfo">
-            <strong>Proveedor A:</strong><br>
-            • Ingrese el volumen en metros cúbicos (CBM).<br>
-            • El sistema calculará: <strong>Peso Volumen = CBM × 167</strong><br>
-            • Peso para Calcular = MAX(Peso Físico, Peso Volumen)
+          <div class="fg" id="aerolineaGroup">
+            <label for="aerolinea"><i class="fa-solid fa-plane-circle-check"></i> Aerolínea</label>
+            <div class="control">
+              <select id="aerolinea">
+                <option value="">Seleccione aerolínea...</option>
+              </select>
+            </div>
+            <span class="error-msg" id="aerolineaError">La aerolínea es requerida para este proveedor</span>
+          </div>
+
+          <div class="fg">
+            <label for="pesoFisico"><i class="fa-solid fa-weight-hanging"></i> Peso físico (KGS)</label>
+            <input id="pesoFisico" type="number" min="0" step="0.01" placeholder="0.00">
+          </div>
+
+          <div class="fg" id="volumenGroup">
+            <label for="volumen" id="volumenLabel"><i class="fa-solid fa-boxes-stacked"></i> Volumen (CBM)</label>
+            <input id="volumen" type="number" min="0" step="0.001" placeholder="0.000">
+            <div class="hint" id="volumenInfo">
+              <strong>Proveedor A:</strong><br>
+              • Ingrese el volumen en metros cúbicos (CBM).<br>
+              • El sistema calculará: <strong>Peso Volumen = CBM × 167</strong><br>
+              • Peso para Calcular = MAX(Peso Físico, Peso Volumen)
+            </div>
+          </div>
+
+          <div class="fg">
+            <label for="vlrInput"><i class="fa-solid fa-percent"></i> VLR (para 6%)</label>
+            <input id="vlrInput" type="number" min="0" step="0.01" placeholder="0.00">
           </div>
         </div>
+
+        <div class="sec" style="margin-top:10px"><i class="fa-solid fa-chart-column"></i> Resultados</div>
+
+        <div class="results">
+          <div class="panel">
+            <div class="kpi">
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-barcode"></i> Código IATA</div>
+                <div class="v" id="codigoIata">-</div>
+              </div>
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-cube"></i> Peso volumen (KGS)</div>
+                <div class="v" id="pesoVolumen">-</div>
+              </div>
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-scale-balanced"></i> Peso a calcular (KGS)</div>
+                <div class="v" id="pesoCalcular">-</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="kpi">
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-money-bill-wave"></i> Flete base</div>
+                <div class="v" id="fleteBase">$ 0.00</div>
+              </div>
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-gas-pump"></i> FS / Fuel surcharge</div>
+                <div class="v" id="fuelSurcharge">$ 0.00</div>
+              </div>
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-receipt"></i> Otros cargos</div>
+                <div class="v" id="otrosCargos">$ 0.00</div>
+              </div>
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-truck-fast"></i> Flete nacional</div>
+                <div class="v" id="base">$ 95.00</div>
+              </div>
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-gavel"></i> Aduanas</div>
+                <div class="v" id="aduanas">$ 104.00</div>
+              </div>
+              <div class="row total">
+                <div class="l"><i class="fa-solid fa-sack-dollar"></i> Total</div>
+                <div class="v" id="total">$ 0.00</div>
+              </div>
+
+              <div class="row">
+                <div class="l"><i class="fa-solid fa-percent"></i> 6%</div>
+                <div class="v" id="seisPercent">$ 0.00</div>
+              </div>
+            </div>
+
+            <div class="big-total">
+              <div>
+                <h3>Total a pagar (CIP)</h3>
+                <div style="color:var(--muted);font-size:12px;line-height:1.45">
+                  Resultado final según la liquidación del proveedor y cargos configurados.
+                </div>
+              </div>
+              <div class="amt" id="totalFinal">$ 0.00</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="results-section">
-      <div class="result-row">
-        <span class="result-label">Código IATA:</span>
-        <span class="result-value" id="codigoIata">-</span>
-      </div>
-      <div class="result-row">
-        <span class="result-label">Peso Volumen (KGS):</span>
-        <span class="result-value" id="pesoVolumen">-</span>
-      </div>
-      <div class="result-row">
-        <span class="result-label">Peso para Calcular (KGS):</span>
-        <span class="result-value" id="pesoCalcular">-</span>
-      </div>
-    </div>
-
-    <div class="results-section">
-      <h2 style="margin-bottom: 15px; color: #333;">Desglose de Costos</h2>
-      <div class="result-row">
-        <span class="result-label">Flete Base:</span>
-        <span class="result-value" id="fleteBase">$ 0.00</span>
-      </div>
-      <div class="result-row">
-        <span class="result-label">FS / Fuel Surcharge:</span>
-        <span class="result-value" id="fuelSurcharge">$ 0.00</span>
-      </div>
-      <div class="result-row">
-        <span class="result-label">Otros Cargos:</span>
-        <span class="result-value" id="otrosCargos">$ 0.00</span>
-      </div>
-      <div class="result-row">
-        <span class="result-label">Flete Nacional:</span>
-        <span class="result-value" id="base">$ 95.00</span>
-      </div>
-      <div class="result-row">
-        <span class="result-label">Aduanas:</span>
-        <span class="result-value" id="aduanas">$ 95.00</span>
-      </div>
-      <div class="result-row" style="border-top: 2px solid #7899d6; padding-top: 15px; margin-top: 10px;">
-        <span class="result-label" style="font-size: 16px;">TOTAL:</span>
-        <span class="result-value" style="font-size: 16px; color: #19356a;" id="total">$ 0.00</span>
-      </div>
-    </div>
-
-    <div class="results-section">
-      <h2 style="margin-bottom: 15px; color: #333;">Calculo del 6%</h2>
-      <div class="result-row">
-        <span class="result-label">VLR:</span>
-        <input type="number" id="vlrInput" min="0" step="0.01" placeholder="0.00" style="width: 200px; text-align: right;" />
-      </div>
-      <div class="result-row">
-        <span class="result-label">6%:</span>
-        <span class="result-value" id="seisPercent">$ 0.00</span>
-      </div>
-    </div>
-
-    <div class="total-section">
-      <h2>TOTAL A PAGAR (CIP)</h2>
-      <div class="total-amount" id="totalFinal">$ 0.00</div>
-    </div>
+    <footer>
+      <span><i class="fa-solid fa-shield-halved"></i> Tarifas referenciales · sujeto a disponibilidad</span>
+      <span><i class="fa-solid fa-clock"></i> Actualizado: Marzo 2026</span>
+      <span><i class="fa-solid fa-envelope"></i> practicantelogistica@laminaire.net</span>
+    </footer>
   </div>
 
   <script>
@@ -601,7 +972,7 @@ function calcular() {
   }
 
   const base = 95;
-  const aduanas = 95;
+  const aduanas = 110;
 
   const total = fleteBase + fuelSurcharge + otrosCargos + base + aduanas;
 
@@ -622,7 +993,7 @@ function limpiarResultados() {
   document.getElementById('fuelSurcharge').textContent = '$ 0.00';
   document.getElementById('otrosCargos').textContent = '$ 0.00';
   document.getElementById('base').textContent = '$ 95.00';
-  document.getElementById('aduanas').textContent = '$ 95.00';
+  document.getElementById('aduanas').textContent = '$ 104.00';
   document.getElementById('total').textContent = '$ 0.00';
   document.getElementById('totalFinal').textContent = '$ 0.00';
 }
@@ -633,6 +1004,3 @@ limpiarResultados();
   </script>
 </body>
 </html>
-
-Esta calculadora solo refleja valores estimados o apróximados.
-
