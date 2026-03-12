@@ -453,13 +453,13 @@
   <header>
     <div class="brand">
       <div class="brand-badge"><i class="fa-solid fa-plane-departure"></i></div>
-      <div class="brand-name">LaminAIRE</div>
+      <div class="brand-name">Aéreo</div>
     </div>
-    <div class="tagline">Cotizador Aéreo</div>
+    <div class="tagline">Exportación</div>
 
     <div class="hero-title">Liquida tu flete<br><span>con facilidad</span></div>
     <div class="hero-sub">
-      Ingresa agente, destino y (si aplica) aerolínea; luego peso y volumen. El sistema calcula peso volumen, peso a liquidar y el desglose del total.
+      Ingresa proveedor, destino y (si aplica) aerolínea; luego peso y volumen. El sistema calcula peso volumen, peso a liquidar y el desglose del total.
     </div>
   </header>
 
@@ -477,9 +477,9 @@
 
   <div class="wrap">
     <div class="chips">
-      <div class="chip"><i class="fa-solid fa-cube"></i><span>Factor volumen <strong>CBM × 167</strong></span></div>
+      <div class="chip"><i class="fa-solid fa-cube"></i><span>Factor volumen <strong>m³ × 167</strong></span></div>
       <div class="chip"><i class="fa-solid fa-scale-balanced"></i><span>Peso a calcular = <strong>MAX</strong>(Físico, Volumen)</span></div>
-      <div class="chip"><i class="fa-solid fa-file-invoice-dollar"></i><span>Incluye base y aduanas según tu configuración</span></div>
+      <div class="chip"><i class="fa-solid fa-file-invoice-dollar"></i><span>Incluye costos due agent y FS</span></div>
     </div>
 
     <div class="card">
@@ -487,7 +487,7 @@
         <div class="ico"><i class="fa-solid fa-route"></i></div>
         <div>
           <h2>Liquidador de Flete Aéreo</h2>
-          <p>Mismo funcionamiento del archivo original, con una interfaz más moderna</p>
+          <p>Proyecto </p>
         </div>
         <div class="pill">AIR · IATA</div>
       </div>
@@ -531,12 +531,12 @@
           </div>
 
           <div class="fg" id="volumenGroup">
-            <label for="volumen" id="volumenLabel"><i class="fa-solid fa-boxes-stacked"></i> Volumen (CBM)</label>
+            <label for="volumen" id="volumenLabel"><i class="fa-solid fa-boxes-stacked"></i> Volumen (m³)</label>
             <input id="volumen" type="number" min="0" step="0.001" placeholder="0.000">
             <div class="hint" id="volumenInfo">
               <strong>Proveedor A:</strong><br>
-              • Ingrese el volumen en metros cúbicos (CBM).<br>
-              • El sistema calculará: <strong>Peso Volumen = CBM × 167</strong><br>
+              • Ingrese el volumen en metros cúbicos (m³).<br>
+              • El sistema calculará: <strong>Peso Volumen = m³ × 167</strong><br>
               • Peso para Calcular = MAX(Peso Físico, Peso Volumen)
             </div>
           </div>
@@ -570,11 +570,11 @@
           <div class="panel">
             <div class="kpi">
               <div class="row">
-                <div class="l"><i class="fa-solid fa-money-bill-wave"></i> Flete base</div>
+                <div class="l"><i class="fa-solid fa-money-bill-wave"></i>Valor Flete</div>
                 <div class="v" id="fleteBase">$ 0.00</div>
               </div>
               <div class="row">
-                <div class="l"><i class="fa-solid fa-gas-pump"></i> FS / Fuel surcharge</div>
+                <div class="l"><i class="fa-solid fa-gas-pump"></i> Fuel Surcharge</div>
                 <div class="v" id="fuelSurcharge">$ 0.00</div>
               </div>
               <div class="row">
@@ -604,7 +604,7 @@
               <div>
                 <h3>Total a pagar (CIP)</h3>
                 <div style="color:var(--muted);font-size:12px;line-height:1.45">
-                  Resultado final según la liquidación del proveedor y cargos configurados.
+                  Resultado final según tarifas del proveedor y cargos configurados.
                 </div>
               </div>
               <div class="amt" id="totalFinal">$ 0.00</div>
@@ -618,7 +618,7 @@
     <footer>
       <span><i class="fa-solid fa-shield-halved"></i> Tarifas referenciales · sujeto a disponibilidad</span>
       <span><i class="fa-solid fa-clock"></i> Actualizado: Marzo 2026</span>
-      <span><i class="fa-solid fa-envelope"></i> practicantelogistica@laminaire.net</span>
+      <span><i class="fa-solid fa-envelope"></i> dieg0319@proton.me </span>
     </footer>
   </div>
 
@@ -1004,5 +1004,6 @@ limpiarResultados();
   </script>
 </body>
 </html>
+
 
 
