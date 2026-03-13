@@ -1,6 +1,6 @@
 # Liquidador de Flete Aéreo y Marítimo
 
->Herramienta web para liquidar fletes aéreos y marítimos FCL. Desarrollada como recurso para estudiantes, docentes de comercio exterior, logística y negocios internacionales, pensado en la PYMES que quieran entender la estructura básica de liquidación de fletes antes de cotizar con un agente de carga.
+Herramienta web para liquidar fletes aéreos y marítimos FCL. Desarrollada como recurso para estudiantes, docentes de comercio exterior, logística y negocios internacionales, pensado en la PYMES que quieran entender la estructura básica de liquidación de fletes antes de cotizar con un agente de carga.
 
 ## Este proyecto permite calcular los costos de flete en dos modalidades de transporte internacional:
 - **Aéreo** - Calcula el costo según el peso real y el peso volumétrico de la carga, además incluye costos de Due Agent, FS y Aduana.
