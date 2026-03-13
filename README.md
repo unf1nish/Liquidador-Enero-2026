@@ -18,8 +18,6 @@ El liquidador está desplegado y listo para usar sin ninguna instalación:
 
 Simplemente abre el enlace en tu navegador, selecciona la modalidad (**Aéreo** o **Marítimo FCL**) e ingresa los datos.
 
----
-
 ### Uso local (para modificar o adaptar)
 
 Si deseas personalizar las tarifas o adaptar el liquidador a tus necesidades, puedes descargarlo y modificarlo fácilmente:
@@ -27,6 +25,8 @@ Si deseas personalizar las tarifas o adaptar el liquidador a tus necesidades, pu
 1. Descarga o clona el repositorio:
    ```bash
    git clone https://github.com/unf1nish/CargoLiq.git
+
+---
 
 ## Licencia
 
